@@ -9,6 +9,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # 配置头文件搜索路径
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/log)
 
 # 设置生成clangd所需的comlile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

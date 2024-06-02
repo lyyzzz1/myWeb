@@ -1,4 +1,4 @@
 set(TEST_EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${TEST_EXECUTABLE_OUTPUT_PATH})
 
-add_subdirectory(logtest)   
+add_subdirectory(logtest)
