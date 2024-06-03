@@ -2,12 +2,13 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
+#include <cstring>   //perror
+#include <iostream>
+#include <unistd.h>  // write
+#include <sys/uio.h> //readv
+#include <vector> //readv
 #include <atomic>
-#include <cstddef>
-#include <string>
-#include <sys/types.h>
-#include <vector>
-#include <strings.h>
+#include <assert.h>
 using namespace std;
 class Buffer {
 public:
@@ -45,8 +46,10 @@ public:
     void append(const void* str,size_t len);
     void append(const Buffer& buffer);
 
-    ssize_t readFd(int fd,int* errno);
-    ssize_t writeFd(int fd,int* errno);
+    // 从指定的文件描述符中读取数据
+    ssize_t readFd(int fd,int* saveErrno);
+    // 向指定的文件描述符中写入数据
+    ssize_t writeFd(int fd,int* saveErrno);
 private:
     char* _beginPtr(); //辅助函数，返回buffer起始位置
     const char* _beginPtr() const;

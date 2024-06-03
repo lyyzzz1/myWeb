@@ -1,6 +1,10 @@
 #include "buffer.hpp"
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
 
 Buffer::Buffer(int initBufferSize)
     : _buffer(initBufferSize), _readPos(0), _writePos(0)
@@ -100,14 +104,39 @@ void Buffer::append(const Buffer& buffer)
     append(buffer.peek(), buffer.readableBytes());
 }
 
-ssize_t Buffer::readFd(int fd, int* errno)
+ssize_t Buffer::readFd(int fd, int* saveErrno)
 {
-    return 0;
+    char buff[65535];
+    struct iovec iov[2];
+    const size_t writable = writableBytes();
+    // 使用iov分散读取，确保剩余部分放到buff中
+    iov[0].iov_base = _beginPtr() + _writePos;
+    iov[0].iov_len = writable;
+    iov[1].iov_base = buff;
+    iov[1].iov_len = sizeof(buff);
+
+    const ssize_t len = readv(fd, iov, 2);
+    if (len < 0) {
+        *saveErrno = errno;
+    } else if (static_cast<size_t>(len) <= writable) {
+        _writePos += len;
+    } else {
+        _writePos = _buffer.size();
+        append(buff, len - writable);
+    }
+    return len;
 }
 
-ssize_t Buffer::writeFd(int fd, int* errno)
+ssize_t Buffer::writeFd(int fd, int* saveErrno)
 {
-    return 0;
+    size_t readSize = readableBytes();
+    ssize_t len = write(fd, peek(), readSize);
+    if (len < 0) {
+        *saveErrno = errno;
+        return len;
+    }
+    _readPos += len;
+    return len;
 }
 
 char* Buffer::_beginPtr()
