@@ -58,7 +58,7 @@ void Buffer::retrieveUntil(const char* end)
 
 void Buffer::retrieveAll()
 {
-    bzero(&_buffer, _buffer.size());
+    fill(_buffer.begin(), _buffer.end(), 0);
     _readPos = 0;
     _writePos = 0;
 }
