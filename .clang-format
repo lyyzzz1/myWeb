@@ -1,6 +1,7 @@
 Language:        Cpp
 AccessModifierOffset: -4
 AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Custom
 BraceWrapping: 
   AfterClass:      false
