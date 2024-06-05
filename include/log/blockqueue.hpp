@@ -41,7 +41,7 @@ public:
     // 弹出元素
     bool pop(T& item);
     bool pop(T& item, int timeout);
-    // 刷新
+    // 通知消费者线程即写线程目前队列中有任务可以取出写
     void flush();
 
 private:
@@ -62,7 +62,10 @@ blockDeque<T>::blockDeque(size_t maxCapacity) : _capacity(maxCapacity)
     _isClose = false;
 }
 
-template <class T> blockDeque<T>::~blockDeque() { close(); }
+template <class T> blockDeque<T>::~blockDeque()
+{
+    close();
+}
 
 template <class T> void blockDeque<T>::close()
 {
@@ -75,7 +78,10 @@ template <class T> void blockDeque<T>::close()
     _producer.notify_all();
 }
 
-template <class T> void blockDeque<T>::flush() { _comsumer.notify_one(); }
+template <class T> void blockDeque<T>::flush()
+{
+    _comsumer.notify_one();
+}
 
 template <class T> void blockDeque<T>::clear()
 {

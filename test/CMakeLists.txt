@@ -1,11 +1,17 @@
 set(TEST_EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${TEST_EXECUTABLE_OUTPUT_PATH})
 
-add_subdirectory(logtest)
+find_package(Threads REQUIRED)
 
 set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 set(BUFFER_DIR ${SRC_DIR}/buffer.cpp)
+set(LOG_DIR ${SRC_DIR}/log.cpp)
 
 add_executable(buffertest buffertest.cpp ${BUFFER_DIR})
+add_executable(logtest logtest.cpp ${LOG_DIR} ${BUFFER_DIR})
+
+target_link_libraries(logtest Threads::Threads)
 
 target_include_directories(buffertest PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(logtest PUBLIC ${PROJECT_SOURCE_DIR}/include)
+target_include_directories(logtest PUBLIC ${PROJECT_SOURCE_DIR}/include/log)
