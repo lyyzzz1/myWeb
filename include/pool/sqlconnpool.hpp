@@ -13,7 +13,7 @@ public:
     static sqlConnPool* getInstance();
 
     MYSQL* getConn();
-    void freeConn();
+    void freeConn(MYSQL * conn);
     int getFreeCount();
 
     void init(const char* host, int port, const char* user, const char* pwd,
