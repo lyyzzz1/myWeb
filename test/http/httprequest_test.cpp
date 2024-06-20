@@ -7,7 +7,6 @@
 
 #define TEST_DEBUG 1
 
-#IF TEST_DEBUG
 TEST(HttpRequestTest, ParseRequestLine)
 {
     Log::getInstance()->init(0);
@@ -90,17 +89,4 @@ TEST(HttpRequestTest, UserVerify)
     // Test registration
     ASSERT_TRUE(httpRequest::userVerify("newuser", "newpass", false));
     ASSERT_FALSE(httpRequest::userVerify("lyy", "lyyyy", false));
-}
-
-#ELSE
-int main()
-{
-    Log::getInstance()->init(0);
-    httpRequest req;
-    req._method = "POST";
-    req._header["Content-Type"] = "application/x-www-form-urlencoded";
-    req._body = "username=test&password=pass";
-    req._parsePost();
-    std::cout << req.getPost("username") << std::endl;
-    std::cout << req.getPost("password") << std::endl;
 }

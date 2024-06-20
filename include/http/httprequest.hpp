@@ -48,7 +48,7 @@ public:
 
     bool isKeepAlive() const;
 
-public:
+private:
     bool _parseRequestLine(const string& line);
     void _parseHeader(const string& line);
     void _parseBody(const string& line);

@@ -7,6 +7,7 @@ set(BUFFER_DIR ${SRC_DIR}/buffer.cpp)
 set(LOG_DIR ${SRC_DIR}/log.cpp)
 set(HTTP_DIR ${SRC_DIR}/http)
 
-add_executable(httprequest_test httprequest_test.cpp ${HTTP_DIR}/httprequest.cpp ${SQLCONNRAII_DIR} ${SQLCONNPOOL_DIR} ${LOG_DIR} ${BUFFER_DIR})
+# add_executable(httprequest_test httprequest_test.cpp ${HTTP_DIR}/httprequest.cpp ${SQLCONNRAII_DIR} ${SQLCONNPOOL_DIR} ${LOG_DIR} ${BUFFER_DIR})
+add_executable(httpresponse_test httpresponse_test.cpp ${HTTP_DIR}/httpresponse.cpp ${SQLCONNRAII_DIR} ${SQLCONNPOOL_DIR} ${LOG_DIR} ${BUFFER_DIR})
 
-target_link_libraries(httprequest_test gtest gtest_main Threads::Threads mysqlclient)
+target_link_libraries(httpresponse_test gtest gtest_main Threads::Threads mysqlclient)
