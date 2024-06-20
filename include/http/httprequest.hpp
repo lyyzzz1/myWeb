@@ -10,7 +10,7 @@
 #include <unordered_set>
 using namespace std;
 
-class httpRquest {
+class httpRequest {
 public:
     enum PARSE_STATE {
         REQUEST_LINE,
@@ -30,11 +30,11 @@ public:
         CLOSED_CONNECTION,
     };
 
-    httpRquest()
+    httpRequest()
     {
         init();
     }
-    ~httpRquest() = default;
+    ~httpRequest() = default;
 
     void init();
     bool parse(Buffer& buff);
@@ -48,19 +48,23 @@ public:
 
     bool isKeepAlive() const;
 
-private:
+public:
     bool _parseRequestLine(const string& line);
     void _parseHeader(const string& line);
     void _parseBody(const string& line);
 
+    string _decoded(string& str);
+
     void _parsePath();
     void _parsePost();
+    // 将POST的body如username=John+Doe&password=pass%40word&remember_me=true解析成正确格式
     void _parseFromUrlencoded();
 
     static bool userVerify(const string& name, const string& pwd, bool islogin);
 
     PARSE_STATE _state;
     string _method, _path, _version, _body;
+    // 存储请求头信息，类似于 key:value
     unordered_map<string, string> _header;
     unordered_map<string, string> _post;
 

@@ -29,3 +29,5 @@ target_include_directories(buffertest PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(logtest PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(logtest PUBLIC ${PROJECT_SOURCE_DIR}/include/log)
 target_include_directories(sqlconntest PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+add_subdirectory(http)
