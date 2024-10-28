@@ -2,3 +2,6 @@
 /build
 /test/bin
 /.cache
+/log
+.vscode
+webserver

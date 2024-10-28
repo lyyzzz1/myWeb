@@ -1,4 +1,10 @@
 /*
+ * @Date: 2024-10-23 08:51:26
+ * @LastEditors: lyyzzz && lyyzzz@yu0.me
+ * @LastEditTime: 2024-10-23 10:28:09
+ * @FilePath: /myWeb/src/http/httpresponse.hpp
+ */
+/*
 与request类配合工作，通过其来获取方法并写入回复报文
 */
 #ifndef HTTPRESPONSE_H
@@ -26,7 +32,7 @@ public:
     char* file();
     size_t fileLen() const;
 
-public:
+private:
     void _writeStatusLine(Buffer& buffer);
     void _writeResHeader(Buffer& buffer);
     void _writeResBody(Buffer& buffer);
@@ -41,9 +47,10 @@ public:
 
     bool _iskeepalive;
 
-    char* _mmFile;
-    struct stat _mmState;
-
+    // 指向内存映射文件的指针，用于高效读取文件内容
+    char* _mmFile;        
+    // 存储被映射文件的状态信息（大小、权限等）
+    struct stat _mmState;  
     const static unordered_map<string, string> SUFFIX_TYPE;
     const static unordered_map<int, string> CODE_STATUS;
     const static unordered_map<int, string> CODE_HTML;

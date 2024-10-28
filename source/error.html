@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8f8f8;
+        }
+        .error-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #d9534f;
+        }
+        p {
+            color: #333;
+        }
+        .nav {
+            margin-top: 20px;
+        }
+        .nav a {
+            display: inline-block;
+            margin: 0 10px;
+            text-decoration: none;
+            color: #0066cc;
+            padding: 5px 10px;
+            border: 1px solid #0066cc;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .nav a:hover {
+            background-color: #0066cc;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1>出错了！</h1>
+        <p>抱歉，操作失败。可能是由于以下原因：</p>
+        <ul style="text-align: left;">
+            <li>用户名或密码错误</li>
+            <li>用户名已被注册</li>
+            <li>服务器出现问题</li>
+        </ul>
+        <p>请重试或联系管理员。</p>
+        <div class="nav">
+            <a href="/login.html">返回登录</a>
+            <a href="/register.html">返回注册</a>
+            <a href="/index.html">返回主页</a>
+        </div>
+    </div>
+</body>
+</html>

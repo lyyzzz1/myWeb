@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        form {
+            display: inline-block;
+            text-align: left;
+        }
+        input {
+            margin: 10px 0;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>登录</h1>
+    <form action="/login" method="post">
+        <label for="username">用户名：</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">密码：</label><br>
+        <input type="password" id="password" name="password" required><br>
+        <input type="submit" value="登录">
+    </form>
+    <p>还没有账号？<a href="/register.html">注册</a></p>
+</body>
+</html>
+

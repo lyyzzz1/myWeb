@@ -21,6 +21,7 @@ const unordered_map<string, string> httpResponse::SUFFIX_TYPE = {
     {".au", "audio/basic"},
     {".mpeg", "video/mpeg"},
     {".mpg", "video/mpeg"},
+    {".mp4", "video/mp4"},
     {".avi", "video/x-msvideo"},
     {".gz", "application/x-gzip"},
     {".tar", "application/x-tar"},
@@ -122,6 +123,7 @@ void httpResponse::_writeResHeader(Buffer& buffer)
 
 void httpResponse::_writeResBody(Buffer& buffer)
 {
+    // 以只读方式打开文件
     int srcFd = open((_sourceDir + _path).data(), O_RDONLY);
     if (srcFd < 0) {
         errorContent(buffer, "File not found!");
@@ -129,16 +131,28 @@ void httpResponse::_writeResBody(Buffer& buffer)
     }
 
     LOG_DEBUG("file path:%s", (_sourceDir + _path).c_str());
-    int* mmRet =
-        (int*)mmap(0, _mmState.st_size, PROT_READ, MAP_PRIVATE, srcFd, 0);
+    
+    // 将文件映射到内存中
+    // 参数说明：
+    // - 0: 让系统自动选择映射的内存地址
+    // - _mmState.st_size: 映射的文件大小
+    // - PROT_READ: 映射区域可读
+    // - MAP_PRIVATE: 映射区域为调用进程私有，对内存的修改不会反映到文件中
+    // - srcFd: 被映射的文件描述符
+    // - 0: 从文件头开始映射
+    int* mmRet = (int*)mmap(0, _mmState.st_size, PROT_READ, MAP_PRIVATE, srcFd, 0);
     if (*mmRet == -1) {
         errorContent(buffer, "File not found!");
         return;
     }
     _mmFile = (char*)mmRet;
+    
+    // 关闭文件描述符（映射仍然有效）
     close(srcFd);
-    buffer.append("Content-length: " + to_string(_mmState.st_size) +
-                  "\r\n\r\n");
+    
+    // 添加Content-length头部，指示响应体的大小
+    LOG_DEBUG("filesize:%d", _mmState.st_size);
+    buffer.append("Content-length: " + to_string(_mmState.st_size) + "\r\n\r\n");
 }
 
 string httpResponse::_getContentType()
@@ -157,6 +171,8 @@ string httpResponse::_getContentType()
 void httpResponse::unmapFile()
 {
     if (_mmFile) {
+        // 解除内存映射
+        // 参数：映射区域指针和大小
         munmap(_mmFile, _mmState.st_size);
         _mmFile = nullptr;
         _mmState = {0};

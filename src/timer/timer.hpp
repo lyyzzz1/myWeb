@@ -1,4 +1,10 @@
 /*
+ * @Date: 2024-10-23 08:51:26
+ * @LastEditors: lyyzzz && lyyzzz@yu0.me
+ * @LastEditTime: 2024-10-28 07:53:38
+ * @FilePath: /myWeb/src/timer/timer.hpp
+ */
+/*
 实现一个堆计时器，可以做到定时清理非活跃的连接
 */
 
@@ -47,6 +53,8 @@ public:
     void tick();
     void pop();
     int getNextTick();
+    void del(int id);
+    bool exist(int id);
 
 private:
     // 删除指定索引的定时器

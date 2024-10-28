@@ -50,7 +50,7 @@ bool heapTimer::_siftdown(size_t index, size_t n)
         }
         _swapNode(i, j);
         i = j;
-        j = index * 2 + 1;
+        j = i * 2 + 1;
     }
     return i > index;
 }
@@ -128,6 +128,7 @@ void heapTimer::tick()
             0) {
             break;
         }
+        LOG_INFO("timer tick,id:%d", node.id);
         node.cb();
         pop();
     }
@@ -135,8 +136,9 @@ void heapTimer::tick()
 
 void heapTimer::pop()
 {
-    assert(!_heap.empty());
-    _del(0);
+    if (!_heap.empty()) {
+        _del(0);
+    }
 }
 
 void heapTimer::clear()
@@ -157,4 +159,18 @@ int heapTimer::getNextTick()
         }
     }
     return res;
+}
+
+void heapTimer::del(int id)
+{
+    // 根据指定的fd删除节点
+    if (_ref.count(id) > 0) {
+        size_t i = _ref[id];
+        _del(i);
+    }
+}
+
+bool heapTimer::exist(int id)
+{
+    return _ref.count(id) > 0;
 }

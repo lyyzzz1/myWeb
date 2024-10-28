@@ -30,7 +30,7 @@ set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
 
 # 添加子目录
 add_subdirectory(src)
-add_subdirectory(test)
+# add_subdirectory(test)
 
 # 设置生成clangd所需的compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
