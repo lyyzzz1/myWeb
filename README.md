@@ -8,6 +8,7 @@
 ## 性能数据
 
 ### QPS
+QPS = 39363 / 10 = 3936.3 请求/秒
 ```
 ➜  myWeb git:(main) ✗ ./WebBench/webbench -c 1000 -t 10 http://localhost:5999/index
 Webbench - Simple Web Benchmark 1.5
